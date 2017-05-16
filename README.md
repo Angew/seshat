@@ -1,0 +1,2 @@
+# seshat
+General CMake utilities
