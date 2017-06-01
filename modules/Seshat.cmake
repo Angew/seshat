@@ -1,0 +1,35 @@
+# Copyright 2017 Petr Kmoch
+# Licensed under the Boost Software License Version 1.0
+# See accompanying file LICENSE or http://www.boost.org/LICENSE_1_0.txt
+
+if(Seshat_INCLUDED)
+	return()
+endif()
+
+set(Seshat_INCLUDED TRUE)
+
+function(seshat_create_missing_sources)
+	foreach(Target IN LISTS ARGN)
+		get_target_property(Sources ${Target} SOURCES)
+		get_target_property(SourceDir ${Target} SOURCE_DIR)
+		if(NOT SourceDir MATCHES "/$")
+			set(SourceDir "${SourceDir}/")
+		endif()
+		foreach(File IN LISTS Sources)
+			string(FIND ${File} "$<" IdxGenex)
+			if(IdxGenex EQUAL -1)
+				get_filename_component(File ${File} ABSOLUTE BASE_DIR ${SourceDir})
+				string(FIND ${File} ${SourceDir} IdxSource)
+				if(IdxSource EQUAL 0)
+					get_source_file_property(IsGenerated ${File} GENERATED)
+					if(NOT IsGenerated AND NOT EXISTS ${File})
+						file(WRITE ${File} "")
+						if(Seshat_VERBOSE)
+							message(STATUS "Seshat: Created missing source file ${File}")
+						endif()
+					endif()
+				endif()
+			endif()
+		endforeach()
+	endforeach()
+endfunction()
