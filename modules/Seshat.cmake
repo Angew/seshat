@@ -8,6 +8,30 @@ endif()
 
 set(Seshat_INCLUDED TRUE)
 
+
+set(Seshat_AUTO_CREATE_MISSING_SOURCES NO CACHE STRING "Controls whether seshat_auto_create_missing_sources() checks for missing files. Set to \"ONCE\" to perform check on next configure only")
+set_property(
+	CACHE Seshat_AUTO_CREATE_MISSING_SOURCES
+	PROPERTY STRINGS
+	YES ONCE NO
+)
+
+if(Seshat_AUTO_CREATE_MISSING_SOURCES)
+	macro(seshat_auto_create_missing_sources)
+		seshat_create_missing_sources(${ARGN})
+	endmacro()
+	if(Seshat_AUTO_CREATE_MISSING_SOURCES STREQUAL "ONCE")
+		set_property(
+			CACHE Seshat_AUTO_CREATE_MISSING_SOURCES
+			PROPERTY VALUE
+			NO
+		)
+	endif()
+else()
+	macro(seshat_auto_create_missing_sources)
+	endmacro()
+endif()
+
 function(seshat_create_missing_sources)
 	foreach(Target IN LISTS ARGN)
 		get_target_property(Sources ${Target} SOURCES)
