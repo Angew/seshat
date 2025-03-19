@@ -4,4 +4,8 @@
 
 @PACKAGE_INIT@
 
+set_and_check(Seshat_MODULE_DIR "@PACKAGE_PackageDir_Modules@")
+
+include(${Seshat_MODULE_DIR}/SeshatGeneral.cmake)
+
 check_required_components()
