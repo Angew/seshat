@@ -41,3 +41,13 @@ add_custom_target(Modules ALL
 	COMMENT "Ensured modules are up-to-date"
 	DEPENDS ${PackageBuildRoot}/${PackageDir_Modules}/SeshatGeneral.cmake
 )
+
+add_custom_target(Package ALL
+	COMMENT "Built "
+
+
+option(SeshatBuild_ENABLE_TESTING "Include Seshat self-tests in generated buildsystem")
+
+if(SeshatBuild_ENABLE_TESTING)
+	add_subdirectory(test)
+endif()
