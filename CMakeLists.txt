@@ -3,7 +3,7 @@
 # See accompanying file LICENSE or http://www.boost.org/LICENSE_1_0.txt
 
 
-cmake_minimum_required(VERSION 3.19)
+cmake_minimum_required(VERSION 3.24)
 
 project(Seshat
 	VERSION 0.1

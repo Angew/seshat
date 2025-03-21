@@ -4,5 +4,5 @@
 
 
 add_test(General:option_with_once:defaults
-	COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_LIST_DIR}/test-defaults.cmake
+	COMMAND ${CMAKE_COMMAND} -DBinaryDir=${CMAKE_CURRENT_BINARY_DIR}/defaults -P ${CMAKE_CURRENT_LIST_DIR}/test-defaults.cmake
 )
